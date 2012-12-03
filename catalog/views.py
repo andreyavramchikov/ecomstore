@@ -2,6 +2,8 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template.context import RequestContext
 from catalog.models import Category, Product
 
+""" BEGINING WORK WITH GITHUB NOW"""
+
 def index(request,template_name="catalog/index.html"):
     page_title = "Musical Instruments and Sheet Musican for Musicans"
     return render_to_response(template_name,locals(),context_instance=RequestContext(request))
