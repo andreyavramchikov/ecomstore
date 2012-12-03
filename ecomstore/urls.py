@@ -15,4 +15,5 @@ urlpatterns = patterns('',
    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
    (r'^category/(?P<category_slug>[-\w]+)/$','catalog.views.show_category'),
    (r'^product/(?P<product_slug>[-\w]+)/$','catalog.views.show_product'),
+
 )
