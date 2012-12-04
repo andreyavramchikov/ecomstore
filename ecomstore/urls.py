@@ -13,7 +13,8 @@ urlpatterns = patterns('',
    (r'^admin/', include(admin.site.urls)),   
    (r'^$', 'catalog.views.index'),
    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
-   (r'^category/(?P<category_slug>[-\w]+)/$','catalog.views.show_category'),
+   (r'^category/(?P<category_slug>[-\w]+)/$','catalog.views.show_category', {'template_name':'catalog/category.html'}, 'catalog_category'),
    (r'^product/(?P<product_slug>[-\w]+)/$','catalog.views.show_product'),
-
 )
+
+handler404 = 'ecomstore.views.file_not_found_404'
