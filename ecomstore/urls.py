@@ -11,10 +11,11 @@ from django.conf import settings
 urlpatterns = patterns('',
    (r'^catalog/$', 'preview.views.home'),
    (r'^admin/', include(admin.site.urls)),   
-   (r'^$', 'catalog.views.index'),
+   (r'^$', 'catalog.views.index', { 'template_name':'catalog/index.html'}, 'catalog_home'),
    (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
    (r'^category/(?P<category_slug>[-\w]+)/$','catalog.views.show_category', {'template_name':'catalog/category.html'}, 'catalog_category'),
    (r'^product/(?P<product_slug>[-\w]+)/$','catalog.views.show_product'),
+   (r'^cart/$', 'cart.views.show_cart', { 'template_name': 'cart/cart.html' }, 'show_cart'),
 )
 
 handler404 = 'ecomstore.views.file_not_found_404'
