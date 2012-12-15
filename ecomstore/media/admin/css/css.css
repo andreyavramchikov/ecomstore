@@ -25,6 +25,8 @@ html,body{
 
 .bn{
 	border:none;
+	width:150px;
+	height:150px;
 }
 
 #main{
@@ -44,7 +46,7 @@ html,body{
 #banner{
 	width:900px;
 	height:75px;
-	background-color:DarkOrange;
+	background-color:#00BFFF;
 	color:White;
 	font-size:36px;
 	font-weight:bold;
@@ -128,7 +130,8 @@ div.product_thumbnail{
 	text-align:center;
 	float:left;
 	width:150px;
-	height:200px;
+	height:243px;
+	margin-left:50px;
 }
 
 /* product page styles */
@@ -194,6 +197,7 @@ div#footer a{
 	font-weight:normal;
 	margin-right:10px;
 }
+
 
 
 

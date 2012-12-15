@@ -5,11 +5,11 @@ TEMPLATE_DEBUG = DEBUG
 import os
 
 
-SITE_NAME = 'Modern Musician'
+SITE_NAME = 'Trucking Industry'
 
 META_KEYWORDS = 'Music, instruments, music accessories, musician supplies'
 
-META_DESCRIPTION = 'Modern Musician is an online supplier of instruments,sheet music, and other accessories for musicians'
+META_DESCRIPTION = 'Trucking Industry'
 
 
 ADMINS = (

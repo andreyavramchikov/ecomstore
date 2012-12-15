@@ -37,7 +37,7 @@
 			{% for item in cart_items %}
 			<tr>
 				<td>
-				<a href="{{ item.get_absolute_url }}" class="cart">
+				<a href="/product/{{item.product.slug}}" class="cart">
 					{{ item.name }}
 				</a>
 				</td>
