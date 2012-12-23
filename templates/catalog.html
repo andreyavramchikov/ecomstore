@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load catalog_tags %}
+{% load search_tags %}
 {% block site_wrapper %}
 	<div id="main">
 		<a href="#content" class="skip_link">Skip to main content</a>
@@ -19,10 +20,10 @@
 			</div>
 		</div>
 		
-		<div id="middle">
+		<div id="middle">			
 			<div id="sidebar">
 				<div class="sidebarIEPadder">
-				
+					{% search_box request %}
 					<br />
 					{% category_list request.path %}
 				</div>

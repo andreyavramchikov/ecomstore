@@ -10,6 +10,7 @@ SITE_NAME = 'Trucking Industry'
 META_KEYWORDS = 'Music, instruments, music accessories, musician supplies'
 
 META_DESCRIPTION = 'Trucking Industry'
+AUTH_PROFILE_MODULE = 'accounts.userprofile'
 
 
 ADMINS = (
@@ -124,6 +125,8 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+PRODUCTS_PER_PAGE = 5
+
 
 
 INSTALLED_APPS = (
@@ -138,6 +141,8 @@ INSTALLED_APPS = (
     'catalog',
     'cart',
     'utils',
+    'accounts',
+    'search',
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
@@ -181,6 +186,10 @@ TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
                                "django.core.context_processors.request",
                                'utils.context_processors.ecomstore',
                                )
+
+LOGIN_REDIRECT_URL = '/my_account/'
+
+
 
 
 

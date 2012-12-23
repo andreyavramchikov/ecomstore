@@ -1,5 +1,14 @@
 from django.db import models
- 
+
+class ActiveProductManager(models.Manager):
+    def get_query_set(self):
+        return super(ActiveProductManager,self).get_query_set().filter(is_active=True)
+    
+class ActiveCategoryManager(models.Manager):
+    def get_query_set(self):
+        return super(ActiveCategoryManager, self).get_query_set().filter(is_active=True)
+    
+
 class Category(models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50, unique=True,
@@ -13,6 +22,9 @@ class Category(models.Model):
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    objects = models.Manager()
+    active = ActiveCategoryManager()
+
     
     class Meta:
         db_table = 'categories'
@@ -34,7 +46,10 @@ class Product(models.Model):
     sku = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=9, decimal_places=2)
     old_price = models.DecimalField(max_digits=9,decimal_places=2,blank=True,default=0.0)
-    image = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='images/products/main')
+    thumbnail = models.ImageField(upload_to='images/products/thumbnails')
+    image_caption = models.CharField(max_length=200)
+
     is_active = models.BooleanField(default=True)
     is_bestseller = models.BooleanField(default=False)
     is_featured = models.BooleanField(default=False)
@@ -47,6 +62,8 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     categories = models.ManyToManyField(Category)
+    objects = models.Manager()
+    active = ActiveProductManager()
     
     class Meta:
         db_table = 'products'
@@ -65,6 +82,8 @@ class Product(models.Model):
             return self.price
         else:
             return None
+        
+
     
     
     

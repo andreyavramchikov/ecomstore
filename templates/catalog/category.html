@@ -8,7 +8,7 @@
 	{% for product in products %}
 	<div class="product_thumbnail">
 		<a href="/product/{{product.slug}}/">
-			<div class="image_src"><img src="{{ MEDIA_URL }}admin/img/{{ product.image}}" alt="{{ product.name }}" class="bn" />
+			<div class="image_src"><img src="{{ MEDIA_URL }}{{ product.image}}" alt="{{ product.name }}" class="bn" />
 			</div>
 			<br />
 			{{ product.name }}
