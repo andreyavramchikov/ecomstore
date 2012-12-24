@@ -5,12 +5,19 @@ from django.core import urlresolvers
 from django.http import HttpResponseRedirect
 from catalog.forms import ProductAddToCartForm
 from cart import cart
+from stats import stats
+from ecomstore.settings import PRODUCTS_PER_ROW
 
 
 
 """ BEGINING WORK WITH GITHUB NOW"""
 
 def index(request,template_name="catalog/index.html"):
+    search_recs = stats.recommended_from_search(request)
+    featured = Product.featured.all()[0:PRODUCTS_PER_ROW]
+    recently_viewed = stats.get_recently_viewed(request)
+    view_recs = stats.recommended_from_views(request)
+
     page_title = "Musical Instruments and Sheet Musican for Musicans"
     return render_to_response(template_name,locals(),context_instance=RequestContext(request))
 
@@ -27,6 +34,8 @@ def show_product(request, product_slug, template_name="catalog/product.html"):
     product = get_object_or_404(Product, slug=product_slug)
     categories = product.categories.all()
     page_title = product.name
+    stats.log_product_view(request, product)
+
     meta_keywords = product.meta_keywords
     meta_description = product.meta_description
     if request.method == 'POST':

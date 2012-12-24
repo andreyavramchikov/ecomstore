@@ -2,14 +2,18 @@ from models import SearchTerm
 from catalog.models import Product
 from django.db.models import Q
 
+
+
 STRIP_WORDS = ['a','an','and','by','for','from','in','no','not','of','on','or','that','the','to','with']
 
 # store the search text in the database 
 def store(request,q):
+    from stats import stats
     # if search term is at least three chars long, store in db
     if len(q) > 2:
         term = SearchTerm()
         term.q = q
+        term.tracking_id = stats.tracking_id(request)
         term.ip_address = request.META.get('REMOTE_ADDR')
         term.user = None
         if request.user.is_authenticated():

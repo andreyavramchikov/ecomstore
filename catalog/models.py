@@ -38,6 +38,11 @@ class Category(models.Model):
     def get_absolute_url(self):
         return ('catalog_category',(),{'category_slug':self.slug})
 
+class FeaturedProductManager(models.Manager):
+    def all(self):
+        return super(FeaturedProductManager, self).all().filter(is_active=True).filter(is_featured=True)
+
+
 class Product(models.Model):
     name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(max_length=50, unique=True,
@@ -64,6 +69,7 @@ class Product(models.Model):
     categories = models.ManyToManyField(Category)
     objects = models.Manager()
     active = ActiveProductManager()
+    featured = FeaturedProductManager()
     
     class Meta:
         db_table = 'products'

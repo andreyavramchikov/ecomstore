@@ -125,9 +125,8 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
-PRODUCTS_PER_PAGE = 5
-
-
+PRODUCTS_PER_PAGE = 12
+PRODUCTS_PER_ROW = 4
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -143,6 +142,7 @@ INSTALLED_APPS = (
     'utils',
     'accounts',
     'search',
+    'stats',
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
