@@ -1,12 +1,15 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.context import RequestContext
-from catalog.models import Category, Product
-from django.core import urlresolvers
-from django.http import HttpResponseRedirect
-from catalog.forms import ProductAddToCartForm
+from catalog.models import Category, Product, ProductReview
+from django.core import urlresolvers, serializers
+from django.http import HttpResponseRedirect, HttpResponse
+from catalog.forms import ProductAddToCartForm, ProductReviewForm
 from cart import cart
 from stats import stats
 from ecomstore.settings import PRODUCTS_PER_ROW
+from django.contrib.auth.decorators import login_required
+from django.template.loader import render_to_string
+from django.utils import simplejson
 
 
 
@@ -54,8 +57,32 @@ def show_product(request, product_slug, template_name="catalog/product.html"):
         
     form.fields['product_slug'].widget.attrs['value'] = product_slug
     request.session.set_test_cookie()
+    product_reviews = ProductReview.approved.filter(product=product).order_by('-date')
+    review_form = ProductReviewForm()
     return render_to_response("catalog/product.html", locals(),
         context_instance=RequestContext(request))
 
 
-   
+def get_json_products(request):
+    products = Product.objects.all()
+    products = products[0:1]
+    json_products = serializers.serialize("json", products)
+    return HttpResponse(json_products, content_type="application/javascript; charset=utf-8")
+
+@login_required
+def add_review(request):
+    form = ProductReviewForm(request.POST)
+    if form.is_valid():
+        review = form.save(commit=False)
+        slug = request.POST.get('slug')
+        product = Product.active.get(slug=slug)
+        review.user = request.user
+        review.product = product
+        review.save()
+        template = "catalog/product_review.html"
+        html = render_to_string(template, {'review': review })
+        response = simplejson.dumps({'success':'True', 'html': html})
+    else:
+        html = form.errors.as_ul()
+        response = simplejson.dumps({'success':'False', 'html': html})
+    return HttpResponse(response,content_type='application/javascript; charset=utf-8')
