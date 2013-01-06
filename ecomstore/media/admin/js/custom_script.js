@@ -4,7 +4,32 @@ function prepareDocument(){
 	$("#add_review").click(slideToggleReviewForm);
 	$("#add_review").addClass('visible');
 	$("#cancel_review").click(slideToggleReviewForm);
+	$("#add_tag").click(addTag);
+	$("#id_tag").keypress(function(event){
+		if (event.keyCode == 13 && jQuery("#id_tag").val().length > 2){
+			addTag();
+			event.preventDefault();
+		}
+	});
+}
 
+function addTag(){
+	
+	tag = { 
+		tag: $("#id_tag").val(),
+		slug: $("#id_slug").val() 
+	};
+	
+	
+	$.post("/tag/product/add/",tag,
+		function(response){
+			if (response.success == "True"){
+				$("#tags").empty();
+				$("#tags").append(response.html);
+				$("#id_tag").val("");
+			}
+		},"json"
+	);
 }
 
 
